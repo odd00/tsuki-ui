@@ -13,5 +13,5 @@
     "resolveJsonModule": true
   },
   "include": ["src", "typings.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["src/**/demo", "src/**/__tests__"]
 }
