@@ -11,6 +11,7 @@
     "tsuki-ui": "workspace:*"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.13.8",
     "cross-env": "^10.1.0",
     "dumi": "^2.4.23",
     "gh-pages": "^6.3.0",

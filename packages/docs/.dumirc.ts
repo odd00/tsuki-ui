@@ -21,4 +21,41 @@ export default defineConfig({
   alias: {
     'tsuki-ui': path.join(__dirname, '../ui/src'),
   },
+  mfsu: false,
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+    ],
+  ],
+  chainWebpack(config: any) {
+    config.output.chunkFilename('[name].[contenthash:8].async.js');
+
+    // 去掉 chunk name 中的冒号（Windows 盘符 D: 导致文件名非法）
+    config.plugin('sanitize-chunk-names').use(
+      class SanitizeChunkNamesPlugin {
+        apply(compiler: any) {
+          compiler.hooks.compilation.tap('SanitizeChunkNames', (compilation: any) => {
+            compilation.hooks.beforeChunkIds.tap('SanitizeChunkNames', (chunks: Iterable<any>) => {
+              for (const chunk of chunks) {
+                if (chunk.name && chunk.name.includes(':')) {
+                  chunk.name = chunk.name.replace(/:/g, '_');
+                }
+              }
+            });
+          });
+        }
+      },
+    );
+
+    config.plugin('solve-windows-naming').use(require('webpack').DefinePlugin, [
+      {
+        'process.env.FS_WINDOWS': JSON.stringify(true),
+      },
+    ]);
+  },
 });
