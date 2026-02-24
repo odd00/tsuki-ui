@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`<Alert /> should render alert with type 1`] = `
+<div
+  class="tsuki-alert tsuki-alert-info"
+>
+  info
+</div>
+`;
+
+exports[`<Alert /> should render alert with type 2`] = `
+<div
+  class="tsuki-alert tsuki-alert-warning"
+>
+  warning
+</div>
+`;
+
+exports[`<Alert /> should render alert with type 3`] = `
+<div
+  class="tsuki-alert tsuki-alert-positive"
+>
+  positive
+</div>
+`;
+
+exports[`<Alert /> should render alert with type 4`] = `
+<div
+  class="tsuki-alert tsuki-alert-negative"
+>
+  negative
+</div>
+`;
+
+exports[`<Alert /> should render default 1`] = `
+<div>
+  <div
+    class="tsuki-alert tsuki-alert-info"
+  >
+    default
+  </div>
+</div>
+`;

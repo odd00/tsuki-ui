@@ -52,7 +52,3 @@ examples/dist/
 .dumi/tmp-production
 storybook-static/
 docs-dist/
-
-# 其他包管理器的锁文件
-package-lock.json
-pnpm-lock.yaml

@@ -1,0 +1,23 @@
+@import '../../style/variables.less';
+
+@alert-prefix-cls: ~'@{tsuki-prefix}-alert';
+
+.@{alert-prefix-cls} {
+  padding: 20px;
+  background: white;
+  border-radius: @border-radius-base;
+  color: @white;
+
+  &-info {
+    background-color: @info-color;
+  }
+  &-positive {
+    background-color: @success-color;
+  }
+  &-negative {
+    background-color: @error-color;
+  }
+  &-warning {
+    background-color: @warning-color;
+  }
+}

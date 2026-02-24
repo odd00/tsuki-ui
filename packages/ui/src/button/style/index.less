@@ -1,0 +1,131 @@
+@import '../../style/variables.less';
+@import '../../style/mixins.less';
+
+@btn-prefix-cls: ~'@{tsuki-prefix}-btn';
+
+.@{btn-prefix-cls} {
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px;
+  padding: 4px 15px;
+  font-size: @font-size-base;
+  border-radius: @border-radius-base;
+  color: rgba(0, 0, 0, 0.85); // Default color
+  background-color: @white; // Default background
+  border-color: #d9d9d9; // Default border
+
+  &:focus,
+  &:hover {
+    color: @primary-color;
+    border-color: @primary-color;
+    background-color: @white;
+  }
+
+  &:active {
+    color: darken(@primary-color, 10%);
+    border-color: darken(@primary-color, 10%);
+    background: @white;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.65;
+    pointer-events: none;
+    & > * {
+      pointer-events: none;
+    }
+  }
+
+  &-primary {
+    color: @white;
+    background-color: @primary-color;
+    border-color: @primary-color;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+
+    &:hover,
+    &:focus {
+      color: @white;
+      background-color: lighten(@primary-color, 10%);
+      border-color: lighten(@primary-color, 10%);
+    }
+
+    &:active {
+      color: @white;
+      background-color: darken(@primary-color, 10%);
+      border-color: darken(@primary-color, 10%);
+    }
+  }
+
+  &-danger {
+    color: @white;
+    background-color: @error-color;
+    border-color: @error-color;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+
+    &:hover,
+    &:focus {
+      color: @white;
+      background-color: lighten(@error-color, 10%);
+      border-color: lighten(@error-color, 10%);
+    }
+
+    &:active {
+      color: @white;
+      background-color: darken(@error-color, 10%);
+      border-color: darken(@error-color, 10%);
+    }
+  }
+
+  &-link {
+    color: @primary-color;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+
+    &:hover,
+    &:focus {
+      color: lighten(@primary-color, 10%);
+      border-color: transparent;
+      background: transparent;
+    }
+
+    &:active {
+      color: darken(@primary-color, 10%);
+      border-color: transparent;
+      background: transparent;
+    }
+
+    &.disabled,
+    &[disabled] {
+      color: rgba(0, 0, 0, 0.25);
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  &-lg {
+    height: 40px;
+    padding: 6.4px 15px;
+    font-size: 16px;
+    border-radius: @border-radius-base;
+  }
+
+  &-sm {
+    height: 24px;
+    padding: 0 7px;
+    font-size: 14px;
+    border-radius: @border-radius-base;
+  }
+}

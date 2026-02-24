@@ -1,0 +1,22 @@
+{
+  "name": "tsuki-ui-docs",
+  "private": true,
+  "scripts": {
+    "dev": "dumi dev",
+    "build:site": "rimraf doc-site && dumi build",
+    "preview:site": "cross-env SITE_BUILD_ENV=PREVIEW npm run build:site && serve doc-site",
+    "deploy:site": "npm run build:site && gh-pages -d doc-site"
+  },
+  "dependencies": {
+    "tsuki-ui": "workspace:*"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "dumi": "^2.4.23",
+    "gh-pages": "^6.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.1.3",
+    "serve": "^14.2.5"
+  }
+}
