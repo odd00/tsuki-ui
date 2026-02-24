@@ -48,7 +48,7 @@ examples/node_modules/
 examples/dist/
 
 # 文档构建
-.dumi/tmp
-.dumi/tmp-production
-storybook-static/
+packages/docs/.dumi/tmp
+packages/docs/.dumi/tmp-production
 docs-dist/
+packages/docs/doc-site/
