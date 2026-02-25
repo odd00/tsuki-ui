@@ -1,0 +1,29 @@
+@import '../../style/variables.less';
+@import '../../style/mixins.less';
+
+@icon-prefix-cls: ~'@{tsuki-prefix}-icon';
+
+.@{icon-prefix-cls} {
+  .transition(color, 0.2s);
+
+  // 主题色
+  &-primary {
+    color: @primary-color;
+  }
+
+  &-success {
+    color: @success-color;
+  }
+
+  &-warning {
+    color: @warning-color;
+  }
+
+  &-danger {
+    color: @error-color;
+  }
+
+  &-info {
+    color: @info-color;
+  }
+}
