@@ -61,6 +61,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.28.6",
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/react-fontawesome": "^3.2.0",
     "clsx": "^2.1.1",
     "prop-types": "^15.8.1"
   }
