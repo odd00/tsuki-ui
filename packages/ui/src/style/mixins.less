@@ -1,0 +1,141 @@
+@import './variables.less';
+
+// ===================== Reset =====================
+
+// 组件通用重置样式
+.reset-component() {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: @font-size-base;
+  line-height: 1.5715;
+  list-style: none;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+// ===================== Sizing =====================
+
+// 设置宽高相等的正方形
+.square(@size) {
+  width: @size;
+  height: @size;
+}
+
+// 设置宽高
+.size(@width, @height) {
+  width: @width;
+  height: @height;
+}
+
+// ===================== Text =====================
+
+// 单行文本溢出省略
+.text-ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 多行文本溢出省略
+.multi-line-ellipsis(@lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: @lines;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ===================== Layout =====================
+
+// 清除浮动
+.clearfix() {
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+// Flex 居中
+.flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex 垂直居中（水平不设置）
+.flex-center-v() {
+  display: flex;
+  align-items: center;
+}
+
+// ===================== Button =====================
+
+// 按钮颜色变体（实心按钮：primary / danger 等）
+.btn-solid-variant(@color) {
+  color: @white;
+  background-color: @color;
+  border-color: @color;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+
+  &:hover,
+  &:focus {
+    color: @white;
+    background-color: lighten(@color, 10%);
+    border-color: lighten(@color, 10%);
+  }
+
+  &:active {
+    color: @white;
+    background-color: darken(@color, 10%);
+    border-color: darken(@color, 10%);
+  }
+}
+
+// 按钮尺寸
+.btn-size(@height, @padding, @font-size) {
+  height: @height;
+  padding: @padding;
+  font-size: @font-size;
+  border-radius: @border-radius-base;
+}
+
+// 按钮禁用状态
+.btn-disabled() {
+  cursor: not-allowed;
+  opacity: 0.65;
+  pointer-events: none;
+  & > * {
+    pointer-events: none;
+  }
+}
+
+// ===================== Transition =====================
+
+// 通用过渡动画
+.transition(@property: all, @duration: 0.3s, @timing: cubic-bezier(0.645, 0.045, 0.355, 1)) {
+  transition: @property @duration @timing;
+}
+
+// ===================== Scrollbar =====================
+
+// 自定义滚动条（用于覆盖默认样式）
+.custom-scrollbar(@width: 6px, @thumb-color: rgba(0, 0, 0, 0.15), @track-color: transparent) {
+  &::-webkit-scrollbar {
+    width: @width;
+    height: @width;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: @thumb-color;
+    border-radius: @width;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: @track-color;
+  }
+}

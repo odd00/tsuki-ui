@@ -1,8 +1,10 @@
 @import '../../style/variables.less';
+@import '../../style/mixins.less';
 
 @alert-prefix-cls: ~'@{tsuki-prefix}-alert';
 
 .@{alert-prefix-cls} {
+  .reset-component();
   padding: 20px;
   background: white;
   border-radius: @border-radius-base;
