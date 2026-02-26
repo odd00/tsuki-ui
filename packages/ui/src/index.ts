@@ -3,3 +3,5 @@ export { default as Button } from './button';
 export { default as Icon } from './icon';
 export type { IconProps } from './icon';
 export { ThemeType } from './icon';
+export { default as Input } from './input';
+export type { InputProps, InputSize } from './input';
