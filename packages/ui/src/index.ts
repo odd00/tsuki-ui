@@ -5,3 +5,5 @@ export type { IconProps } from './icon';
 export { ThemeType } from './icon';
 export { default as Input } from './input';
 export type { InputProps, InputSize } from './input';
+export { default as AutoComplete } from './auto-complete';
+export type { AutoCompleteProps, DataSourceType, DataSourceObject } from './auto-complete';
