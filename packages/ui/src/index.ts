@@ -7,3 +7,5 @@ export { default as Input } from './input';
 export type { InputProps, InputSize } from './input';
 export { default as AutoComplete } from './auto-complete';
 export type { AutoCompleteProps, DataSourceType, DataSourceObject } from './auto-complete';
+export { default as Upload } from './upload';
+export type { UploadProps, UploadFile } from './upload';

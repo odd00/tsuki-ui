@@ -1,0 +1,119 @@
+@import '../../style/variables.less';
+@import '../../style/mixins.less';
+
+@upload-prefix-cls: ~'@{tsuki-prefix}-upload';
+
+.@{upload-prefix-cls} {
+  font-size: @font-size-base;
+  color: @text-color;
+
+  &-input {
+    display: inline-block;
+    cursor: pointer;
+    &.is-drag {
+      display: block;
+    }
+  }
+
+  &-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-top: 8px;
+
+    &-item {
+      transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-top: 5px;
+      position: relative;
+      box-sizing: border-box;
+      border-radius: 4px;
+      min-width: 200px;
+      &:hover {
+        background-color: @background-color-base;
+        .file-status {
+          display: none;
+        }
+        .file-actions {
+          display: block;
+        }
+      }
+
+      .file-name {
+        margin-left: 10px;
+        margin-right: 40px;
+        svg {
+          margin-right: 5px;
+          color: #999;
+        }
+      }
+
+      .file-name-error {
+        color: @error-color;
+        svg {
+          color: @error-color;
+        }
+      }
+
+      .file-status {
+        display: block;
+        position: absolute;
+        right: 5px;
+        top: 0;
+        line-height: inherit;
+      }
+
+      .file-actions {
+        display: none;
+        position: absolute;
+        right: 7px;
+        top: 0;
+        line-height: inherit;
+        cursor: pointer;
+      }
+
+      .tsuki-upload-progress-bar {
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #e4e7ed;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .tsuki-upload-progress-bar-inner {
+        background-color: @primary-color;
+        transition: width 0.3s linear;
+        height: 100%;
+      }
+    }
+  }
+
+  &-dragger {
+    background: #fafafa;
+    border: 1px dashed #d9d9d9;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 20px;
+    width: 360px;
+    height: 180px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &:hover {
+      border-color: @primary-color;
+    }
+
+    &.is-dragover {
+      border: 2px dashed @primary-color;
+      background: rgba(64, 158, 255, 0.2);
+    }
+  }
+}
