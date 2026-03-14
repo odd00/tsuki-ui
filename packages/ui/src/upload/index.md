@@ -37,6 +37,7 @@ nav:
 | action | 必选参数，上传的地址 | - | string |
 | fileList | 受控模式下的文件列表 | - | `UploadFile[]` |
 | defaultFileList | 上传的文件列表 | - | `UploadFile[]` |
+| maxCount | 限制上传文件数量上限 | - | `number` |
 | beforeUpload | 上传文件之前的钩子，参数为上传的文件，若返回 false 或者 Promise 则停止上传 | - | `(file: File) => boolean \| Promise<File>` |
 | onProgress | 文件上传时的钩子 | - | `(percentage: number, file: UploadFile) => void` |
 | onSuccess | 文件上传成功时的钩子 | - | `(data: any, file: UploadFile) => void` |

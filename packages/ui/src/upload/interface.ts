@@ -17,6 +17,7 @@ export interface UploadProps {
   action: string;
   fileList?: UploadFile[];
   defaultFileList?: UploadFile[];
+  maxCount?: number;
   beforeUpload?: (file: File) => boolean | Promise<File>;
   onProgress?: (percentage: number, file: UploadFile) => void;
   onSuccess?: (data: any, file: UploadFile) => void;

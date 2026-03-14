@@ -13,6 +13,7 @@ export const Upload: FC<UploadProps> = (props) => {
     action,
     fileList: controlledFileList,
     defaultFileList,
+    maxCount,
     beforeUpload,
     onProgress,
     onSuccess,
@@ -92,6 +93,14 @@ export const Upload: FC<UploadProps> = (props) => {
 
   const uploadFiles = (files: FileList) => {
     let postFiles = Array.from(files);
+    if (typeof maxCount === 'number') {
+      const remainCount = maxCount - fileListRef.current.length;
+      if (remainCount <= 0) {
+        return;
+      }
+      postFiles = postFiles.slice(0, remainCount);
+    }
+
     postFiles.forEach((file) => {
       if (!beforeUpload) {
         post(file);
@@ -109,6 +118,10 @@ export const Upload: FC<UploadProps> = (props) => {
   };
 
   const post = (file: File) => {
+    if (typeof maxCount === 'number' && fileListRef.current.length >= maxCount) {
+      return;
+    }
+
     let _file: UploadFile = {
       uid: Date.now() + 'upload-file',
       status: 'ready',
