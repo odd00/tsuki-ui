@@ -35,12 +35,14 @@ nav:
 | Name | Description | Default | Control |
 | --- | --- | --- | --- |
 | action | 必选参数，上传的地址 | - | string |
+| fileList | 受控模式下的文件列表 | - | `UploadFile[]` |
 | defaultFileList | 上传的文件列表 | - | `UploadFile[]` |
 | beforeUpload | 上传文件之前的钩子，参数为上传的文件，若返回 false 或者 Promise 则停止上传 | - | `(file: File) => boolean \| Promise<File>` |
 | onProgress | 文件上传时的钩子 | - | `(percentage: number, file: UploadFile) => void` |
 | onSuccess | 文件上传成功时的钩子 | - | `(data: any, file: UploadFile) => void` |
 | onError | 文件上传失败时的钩子 | - | `(err: any, file: UploadFile) => void` |
-| onChange | 文件状态改变时的钩子，上传成功或者失败时都会被调用 | - | `(file: UploadFile) => void` |
+| onChange | 文件状态改变时的钩子，上传成功或者失败时都会被调用 | - | `(file: UploadFile, fileList: UploadFile[]) => void` |
+| onFileListChange | 文件列表变更回调（包含新增、进度、状态变更、删除） | - | `(fileList: UploadFile[]) => void` |
 | onRemove | 文件列表移除文件时的钩子 | - | `(file: UploadFile) => void` |
 | headers | 设置上传的请求头部 | - | `{ [key: string]: any }` |
 | name | 上传的文件字段名 | "file" | `string` |
@@ -49,3 +51,8 @@ nav:
 | accept | 可选参数，接受上传的文件类型 | - | `string` |
 | multiple | 是否支持多选文件 | - | `boolean` |
 | drag | 是否支持拖拽上传 | - | `boolean` |
+
+## 受控和非受控
+
+- 非受控：传入 `defaultFileList`，由 Upload 内部维护文件列表。
+- 受控：传入 `fileList`，并在 `onChange` 或 `onFileListChange` 中更新外部状态后再回传给组件。

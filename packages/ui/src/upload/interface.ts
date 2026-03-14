@@ -15,12 +15,14 @@ export interface UploadFile {
 
 export interface UploadProps {
   action: string;
+  fileList?: UploadFile[];
   defaultFileList?: UploadFile[];
   beforeUpload?: (file: File) => boolean | Promise<File>;
   onProgress?: (percentage: number, file: UploadFile) => void;
   onSuccess?: (data: any, file: UploadFile) => void;
   onError?: (err: any, file: UploadFile) => void;
-  onChange?: (file: UploadFile) => void;
+  onChange?: (file: UploadFile, fileList: UploadFile[]) => void;
+  onFileListChange?: (fileList: UploadFile[]) => void;
   onRemove?: (file: UploadFile) => void;
   headers?: { [key: string]: any };
   name?: string;

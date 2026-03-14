@@ -1,4 +1,4 @@
-import React, { FC, useRef, ChangeEvent, useState } from 'react';
+import React, { FC, useRef, ChangeEvent, useState, useEffect } from 'react';
 import UploadList from './upload-list';
 import Dragger from './dragger';
 import clsx from 'clsx';
@@ -11,12 +11,14 @@ const prefixCls = 'tsuki-upload';
 export const Upload: FC<UploadProps> = (props) => {
   const {
     action,
+    fileList: controlledFileList,
     defaultFileList,
     beforeUpload,
     onProgress,
     onSuccess,
     onError,
     onChange,
+    onFileListChange,
     onRemove,
     name = 'file',
     headers,
@@ -29,10 +31,29 @@ export const Upload: FC<UploadProps> = (props) => {
   } = props;
 
   const fileInput = useRef<HTMLInputElement>(null);
-  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
+  const isControlled = controlledFileList !== undefined;
+  const [innerFileList, setInnerFileList] = useState<UploadFile[]>(defaultFileList || []);
+  const mergedFileList = isControlled ? controlledFileList : innerFileList;
+  const fileListRef = useRef<UploadFile[]>(mergedFileList || []);
+
+  useEffect(() => {
+    fileListRef.current = mergedFileList || [];
+  }, [mergedFileList]);
+
+  const applyFileListChange = (updater: (prevList: UploadFile[]) => UploadFile[]) => {
+    const nextList = updater(fileListRef.current);
+    fileListRef.current = nextList;
+    if (!isControlled) {
+      setInnerFileList(nextList);
+    }
+    if (onFileListChange) {
+      onFileListChange(nextList);
+    }
+    return nextList;
+  };
 
   const updateFileList = (updateFile: UploadFile, updateObj: Partial<UploadFile>) => {
-    setFileList((prevList) => {
+    return applyFileListChange((prevList) => {
       return prevList.map((file) => {
         if (file.uid === updateFile.uid) {
           return { ...file, ...updateObj };
@@ -61,7 +82,7 @@ export const Upload: FC<UploadProps> = (props) => {
   };
 
   const handleRemove = (file: UploadFile) => {
-    setFileList((prevList) => {
+    applyFileListChange((prevList) => {
       return prevList.filter((item) => item.uid !== file.uid);
     });
     if (onRemove) {
@@ -96,7 +117,7 @@ export const Upload: FC<UploadProps> = (props) => {
       percent: 0,
       raw: file,
     };
-    setFileList((prevList) => {
+    applyFileListChange((prevList) => {
       return [_file, ...prevList];
     });
     const formData = new FormData();
@@ -124,9 +145,14 @@ export const Upload: FC<UploadProps> = (props) => {
       if (e.lengthComputable) {
         const percentage = Math.round((e.loaded * 100) / e.total);
         if (percentage < 100) {
-          updateFileList(_file, { percent: percentage, status: 'uploading' });
+          const nextList = updateFileList(_file, { percent: percentage, status: 'uploading' });
+          const nextFile = nextList.find((item) => item.uid === _file.uid) || {
+            ..._file,
+            percent: percentage,
+            status: 'uploading' as UploadFileStatus,
+          };
           if (onProgress) {
-            onProgress(percentage, _file);
+            onProgress(percentage, nextFile);
           }
         }
       }
@@ -134,31 +160,51 @@ export const Upload: FC<UploadProps> = (props) => {
 
     xhr.onload = function () {
       if (xhr.status < 200 || xhr.status >= 300) {
-        updateFileList(_file, { status: 'error', error: xhr.response });
+        const nextList = updateFileList(_file, { status: 'error', error: xhr.response });
+        const nextFile = nextList.find((item) => item.uid === _file.uid) || {
+          ..._file,
+          status: 'error' as UploadFileStatus,
+          error: xhr.response,
+        };
         if (onError) {
-          onError(xhr.response, _file);
+          onError(xhr.response, nextFile);
         }
         if (onChange) {
-          onChange({ ..._file, status: 'error', error: xhr.response });
+          onChange(nextFile, nextList);
         }
       } else {
-        updateFileList(_file, { status: 'success', response: xhr.response, percent: 100 });
+        const nextList = updateFileList(_file, {
+          status: 'success',
+          response: xhr.response,
+          percent: 100,
+        });
+        const nextFile = nextList.find((item) => item.uid === _file.uid) || {
+          ..._file,
+          status: 'success' as UploadFileStatus,
+          response: xhr.response,
+          percent: 100,
+        };
         if (onSuccess) {
-          onSuccess(xhr.response, _file);
+          onSuccess(xhr.response, nextFile);
         }
         if (onChange) {
-          onChange({ ..._file, status: 'success', response: xhr.response });
+          onChange(nextFile, nextList);
         }
       }
     };
 
     xhr.onerror = function (e) {
-      updateFileList(_file, { status: 'error', error: xhr.response });
+      const nextList = updateFileList(_file, { status: 'error', error: xhr.response });
+      const nextFile = nextList.find((item) => item.uid === _file.uid) || {
+        ..._file,
+        status: 'error' as UploadFileStatus,
+        error: xhr.response,
+      };
       if (onError) {
-        onError(xhr.response, _file);
+        onError(xhr.response, nextFile);
       }
       if (onChange) {
-        onChange({ ..._file, status: 'error', error: xhr.response });
+        onChange(nextFile, nextList);
       }
     };
 
@@ -190,7 +236,7 @@ export const Upload: FC<UploadProps> = (props) => {
         />
       </div>
 
-      <UploadList fileList={fileList} onRemove={handleRemove} />
+      <UploadList fileList={mergedFileList || []} onRemove={handleRemove} />
     </div>
   );
 };
